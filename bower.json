@@ -1,0 +1,31 @@
+{
+  "name": "polymer",
+  "version": "0.0.0",
+  "homepage": "https://github.com/prabhuramkumar/polymer",
+  "authors": [
+    "prabhuramkumar <prabhu.ramkumar1@gmail.com>"
+  ],
+  "description": "polymer test",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.2"
+  },
+  "devDependencies": {
+    "core-scroll-threshold": "polymer/core-scroll-threshold#~0.5.2",
+    "core-toolbar": "polymer/core-toolbar#~0.5.2",
+    "core-scroll-header-panel": "polymer/core-scroll-header-panel#~0.5.2",
+    "core-resizable": "polymer/core-resizable#~0.5.2",
+    "core-icon-button": "polymer/core-icon-button#~0.5.2",
+    "core-header-panel": "polymer/core-header-panel#~0.5.2",
+    "core-drawer-panel": "polymer/core-drawer-panel#~0.5.2",
+    "core-image": "polymer/core-image#~0.5.2",
+    "core-menu": "polymer/core-menu#~0.5.2"
+  }
+}
