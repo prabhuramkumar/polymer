@@ -36,10 +36,9 @@
 		background: #ececec;
 		height: 100%;
 	}
-	.main-container{
-		background: #fff;
-		padding: 20px;
+	.container{
 		background: #cccccc;
+		height: 100%;
 	}
 	.drawer-header{
 		width: 100%;
@@ -49,20 +48,24 @@
 
 </head>
 <body unresolved fullbleed layout vertical>
+	<!-- <div flex layout vertical>
+		<div style="height:100px;">Header</div>
+		<div flex style="background:green;">two</div>
+	</div> -->
 
-  <core-scroll-header-panel flex condenses keepCondensedHeader mode="waterfall-tall">
-    <core-toolbar class="tall">
+  <core-scroll-header-panel flex layout vertical mode="waterfall">
+    <core-toolbar class="">
       	<core-icon icon="dashboard" class="bottom"></core-icon>
       	<h2 class="bottom">Gisty</h2>
     </core-toolbar>
    
-    <div class="main-container">
+    <div class="container">
 
     	<!-- <animated-page></animated-page> -->
-    	<blog-list flex></blog-list>
+    	<blog-list  vertical layout></blog-list>
 
     </div>
-  </core-scroll-header-panel>
+  </core-scroll-header-panel> 
 
 </body>
 </html>

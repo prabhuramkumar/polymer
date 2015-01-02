@@ -7,41 +7,42 @@
 <!-- <link rel="import" href="../../bower_components/core-scroll-header-panel/demos/sample-content.html"> -->
 
 <polymer-element name="blog-list">
-    <template>
-      <style>
-          #pages{
-            height: 100%;
-            width: 100%;
-          }
-          .card{
-            text-align: left;
-            background: white;
-            margin-bottom: 20px;
-            width:400px;
-            min-height: 200px;
-          }
-          .view {
-            background-color: #ccc;
-            width: 100%;
-            height: 400px;
-          }
-          .blog-card{
-            background: #fff;
-          }
-      </style>
-      <core-ajax
-          id="ajax" auto
-          url="https://api.myjson.com/bins/2yku7"
-          handleAs="json"
-          response="{{response}}"
-          progress="{{progress}}"
-          loading="{{loading}}"
-          ></core-ajax>
-
-    <core-animated-pages id="pages" flex selected="0" on-core-animated-pages-transition-end="{{transitionend}}" transitions="cross-fade-all hero-transition">
+  <template>
+    <style>
+        :host{
+          height: 100%
+        }
+        #container{
+          overflow: auto;
+        }
+        .card{
+          text-align: left;
+          background: white;
+          margin-bottom: 10px;
+          margin-top: 10px;
+          width:400px;
+          min-height: 200px;
+        }
+        .view {
+          background-color: #ccc;
+        }
+        .blog-card{
+          background: #fff;
+        }
+    </style>
+    <core-ajax
+        id="ajax" auto
+        url="https://api.myjson.com/bins/2yku7"
+        handleAs="json"
+        response="{{response}}"
+        progress="{{progress}}"
+        loading="{{loading}}"
+        ></core-ajax>
+    <section flex vertical layout>
+    <core-animated-pages flex id="pages" selected="0" on-core-animated-pages-transition-end="{{transitionend}}" transitions="cross-fade-all hero-transition">
 
       <section vertical layout>
-        <div horizontal flex wrap around-justified layout hero-p>
+        <div id="container" horizontal flex wrap around-justified layout hero-p>
           <template repeat="{{blog, i in blogs}}">
             	<blog-card class="card" on-tap="{{selection}}" hero-id="blog-{{i}}" hero?="{{$.pages.selected === i + 1 || lastSelected === i + 1}}">
                   <img src="{{blog.owner.avatar_url}}" width="70" height="70">
@@ -60,30 +61,31 @@
       </template>
 
      </core-animated-pages>
+     </section>
 
-    </template>
+  </template>
 
-    <script>
-    	Polymer('blog-list', {
-  		  responseChanged: function(oldValue) {
-  		    this.blogs = this.response;
-          console.log(this.blogs);
-  		  },
-        selection: function(e){
-          var k = e.target.templateInstance.model.i;
-          this.$.pages.selected = k+1;
-        },
-        transitionend: function(){
-          if (this.lastSelected) {
-            this.lastSelected = null;
-          }
-        },
-        back: function() {
-          this.lastSelected = this.$.pages.selected;
-          this.$.pages.selected = 0;
+  <script>
+  	Polymer('blog-list', {
+		  responseChanged: function(oldValue) {
+		    this.blogs = this.response;
+        console.log(this.blogs);
+		  },
+      selection: function(e){
+        var k = e.target.templateInstance.model.i;
+        this.$.pages.selected = k+1;
+      },
+      transitionend: function(){
+        if (this.lastSelected) {
+          this.lastSelected = null;
         }
-        
-		  });
-    </script>
+      },
+      back: function() {
+        this.lastSelected = this.$.pages.selected;
+        this.$.pages.selected = 0;
+      }
+      
+	  });
+  </script>
 
 </polymer-element>
