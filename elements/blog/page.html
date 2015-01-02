@@ -1,0 +1,222 @@
+
+  
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<polymer-element name="shadow-div" noscript>
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div target="{{}}" z="1"></div>
+    <content></content>
+  </template>
+</polymer-element>
+
+<polymer-element name="animated-page">
+<template>
+<style>
+.fit {
+      width: 100%;
+      height: 100%;
+    }
+
+    .toolbar {
+      background: #8d3efc;
+      /* FIXME */
+      color: #fff !important;
+      fill: #fff;
+    }
+
+   
+
+    .toolbar-2 {
+      
+      width: 100%;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      font-size: 48px;
+    }
+
+    .container {
+      background-color: #e7e7e7;
+      padding: 16px;
+    }
+
+    .card {
+      position: relative;
+      background-color: #fff;
+      border-radius: 2px;
+    }
+
+    .card-top {
+      background: #f2da2f;
+      height: 240px;
+    }
+
+    .card-top-2 {
+      background: #99f8b7;
+      height: 240px;
+    }
+
+    .card-bottom {
+      padding: 24px;
+    }
+
+    .headline {
+      font-size: 24px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .icon {
+      position: relative;
+      background: #000;
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .icon::after {
+      content: 'T';
+      font-size: 24px;
+      position: absolute;
+      top: 7px;
+      left: 13px;
+    }
+
+    .source-container {
+      margin-top: 16px;
+    }
+
+    .two-lines {
+      margin-left: 16px;
+    }
+
+    .source {
+      font-size: 14px;
+    }
+
+    .time {
+      color: rgba(0, 0, 0, 0.54);
+      font-size: 12px;
+    }
+
+    .tiles-container {
+      margin-top: 16px;
+    }
+
+    .tile {
+      position: relative;
+      display: inline-block;
+      width: 85px;
+      height: 85px;
+      background: #fff;
+      border-radius: 2px;
+    }
+  
+  </style>
+
+
+<core-animated-pages id="pages" class="fit" selected="0" transitions="cross-fade-all hero-transition">
+
+    <section id="first">
+
+      <div class="container" hero-p>
+        <div class="card" hero-p on-tap="{{stuff}}">
+          <div class="card-bottom" hero-p>
+            <div class="headline">Google's Craziest Offices</div>
+            <div class="source-container" hero-p layout horizontal center>
+              <div class="icon" hero-id="icon-header" hero></div>
+              <div class="icon" hero-id="icon-header-1" hero></div>
+              <div class="two-lines">
+                <div class="source">The New York Times</div>
+                <div class="time">36 minutes ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+    <section id="second">
+
+     
+
+      <core-toolbar class="tall toolbar-2">
+        <div flex class="middle" hero-id="icon-header" hero>T</div>
+      </core-toolbar>
+
+      <div class="container">
+
+        <div class="card" on-tap="{{stuff}}">
+          <div class="card-bottom">
+            <div class="headline">Some long overflowing headline</div>
+            <div class="source-container" layout horizontal center>
+              <div class="icon" style="background:red;"></div>
+              <div class="two-lines">
+                <div class="source">The New York Times</div>
+                <div class="time">36 minutes ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section id="third">
+
+     
+
+      <core-toolbar class="tall toolbar-2">
+        <div flex class="middle" hero-id="icon-header-1" hero>T</div>
+      </core-toolbar>
+
+      <div class="container">
+
+        <div class="card" on-tap="{{stuff}}">
+          <div class="card-bottom">
+            <div class="headline">Some long overflowing headline</div>
+            <div class="source-container" layout horizontal center>
+              <div class="icon" style="background:green;"></div>
+              <div class="two-lines">
+                <div class="source">The Times of India</div>
+                <div class="time">36 minutes ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </core-animated-pages>
+
+   
+  </template>
+
+   <script>
+    Polymer('animated-page',{
+        stuff: function(e){
+          this.$.pages.selected = this.$.pages.selected ? 0 : 1;
+        }
+    });
+
+
+  </script>
+
+  </polymer-element>
+

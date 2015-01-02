@@ -26,6 +26,9 @@
     "core-header-panel": "polymer/core-header-panel#~0.5.2",
     "core-drawer-panel": "polymer/core-drawer-panel#~0.5.2",
     "core-image": "polymer/core-image#~0.5.2",
-    "core-menu": "polymer/core-menu#~0.5.2"
+    "core-menu": "polymer/core-menu#~0.5.2",
+    "core-ajax": "polymer/core-ajax#~0.5.2",
+    "paper-button": "polymer/paper-button#~0.5.2",
+    "core-animated-pages": "polymer/core-animated-pages#~0.5.2"
   }
 }

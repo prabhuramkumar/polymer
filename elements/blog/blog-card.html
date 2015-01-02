@@ -1,0 +1,44 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<polymer-element name="blog-card" noscript>
+	<template>
+		<style>
+			:host {
+		      display: block;
+		      position: relative;
+		      padding: 20px;
+		      font-size: 1rem;
+		      font-weight: 200;
+		      width: 100%;
+		    }
+		    .card-header {
+		      margin-bottom: 10px;
+		    }
+		    polyfill-next-selector { content: '.card-header h2'; }
+			.card-header ::content h2 {
+			  margin: 0;
+			  font-size: 1.8rem;
+			  font-weight: 300;
+			  width: 70%;
+			}
+			polyfill-next-selector { content: '.card-header img'; }
+			.card-header ::content img {
+			  width: 70px;
+			  border-radius: 50%;
+			  margin: 10px;
+			}
+		</style>
+
+
+		
+		<div class="card-header" layout horizontal center>
+		  <content select="img"></content>
+		  <content select="h2"></content>
+		</div>
+		<content></content>	
+
+	</template>
+
+</polymer-element>
