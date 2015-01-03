@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+ <link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="blog-card.html">
 <!-- <link rel="import" href="../../bower_components/core-scroll-header-panel/demos/sample-content.html"> -->
 
@@ -43,6 +44,9 @@
 
       <section vertical layout>
         <div id="container" horizontal flex wrap around-justified layout hero-p>
+          <div layout vertical center-justified hidden?="{{response}}">
+            <paper-spinner active></paper-spinner>
+          </div>
           <template repeat="{{blog, i in blogs}}">
             	<blog-card class="card" on-tap="{{selection}}" hero-id="blog-{{i}}" hero?="{{$.pages.selected === i + 1 || lastSelected === i + 1}}">
                   <img src="{{blog.owner.avatar_url}}" width="70" height="70">
