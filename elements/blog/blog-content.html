@@ -1,0 +1,56 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
+
+
+<polymer-element name="blog-content"  attributes="content, index">
+	<template>
+		<style>
+			:host {
+		      font-size: 1rem;
+		      width: 100%;
+		      overflow: auto;
+		    }
+		    .blog-header {
+		      margin-bottom: 10px;
+		      background-color: #333;
+		      height: 300px;
+		    }
+		    .blog-content{
+		    	width: 70%;
+		    	margin:0 auto;
+		    }
+		    polyfill-next-selector { content: '.card-header h2'; }
+			.blog-header ::content h2 {
+			  margin: 0;
+			  font-size: 3rem;
+			  word-break: break-word;
+			  color: #fff;
+			  width: 70%;
+			  margin:0 auto;
+			}
+			polyfill-next-selector { content: '.card-header img'; }
+			.blog-header ::content img {
+			  width: 70px;
+			  border-radius: 50%;
+			  margin: 10px;
+			}
+		</style>
+	
+		
+		<div class="blog-header" layout vertical center-justified>
+		  <content select="h2"></content>
+		</div>
+		<div id="blogContent"  class="blog-content" horizontal flex wrap layout>
+		</div>
+
+	</template>
+	<script>
+		Polymer('blog-content', {
+			contentChanged: function(){
+				this.injectBoundHTML(this.content, this.$.blogContent);
+			}
+		});
+	</script>
+
+</polymer-element>
