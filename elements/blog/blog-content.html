@@ -3,46 +3,54 @@
 <link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
 
 
-<polymer-element name="blog-content"  attributes="content, index">
+<polymer-element name="blog-content"  attributes="content">
 	<template>
 		<style>
 			:host {
-		      font-size: 1rem;
-		      width: 100%;
-		      overflow: auto;
+				width: 100%;
 		    }
 		    .blog-header {
-		      margin-bottom: 10px;
-		      background-color: #333;
-		      height: 300px;
+				margin-bottom: 10px;
+				background-color: #333;
+				padding:40px 0;
 		    }
 		    .blog-content{
-		    	width: 70%;
 		    	margin:0 auto;
+		    	line-height: 28px;
+		    	font-weight: 100;
+		    	font-size: 21px;
+		    	width:60%;
 		    }
-		    polyfill-next-selector { content: '.card-header h2'; }
-			.blog-header ::content h2 {
-			  margin: 0;
-			  font-size: 3rem;
-			  word-break: break-word;
-			  color: #fff;
-			  width: 70%;
-			  margin:0 auto;
+		    .blog-content blockquote {
+				font-size: 17px;
+				line-height: 26px;
+				margin-bottom: 35px;
+				padding-left: 15px;
+				border-width: 0px 0px 0px 3px;
+				border-style: solid;
 			}
-			polyfill-next-selector { content: '.card-header img'; }
+			.blog-header ::content h2, .blog-header ::content p, .blog-header ::content span{
+				width:60%;
+				color: #fff;
+			}
+			.blog-header ::content h2 {
+				margin: 0;
+				font-size: 3rem;
+				word-break: break-word;
+				margin:0 auto;
+				line-height: 48px;
+			}
 			.blog-header ::content img {
-			  width: 70px;
-			  border-radius: 50%;
-			  margin: 10px;
+				width: 10px;
+				border-radius: 50%;
+				margin: 10px;
 			}
 		</style>
-	
 		
-		<div class="blog-header" layout vertical center-justified>
-		  <content select="h2"></content>
+		<div class="blog-header" layout vertical center>
+		  <content></content>
 		</div>
-		<div id="blogContent"  class="blog-content" horizontal flex wrap layout>
-		</div>
+		<div class="blog-content" id="blogContent" horizontal flex wrap layout></div>
 
 	</template>
 	<script>

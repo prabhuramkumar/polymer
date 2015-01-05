@@ -19,24 +19,33 @@
       #container{
         overflow: auto;
       }
-      .card{
+      .blog-card{
         text-align: left;
         background: white;
-        margin-bottom: 10px;
-        margin-top: 10px;
-        width:400px;
-        min-height: 200px;
+        width:60%;
+        border-bottom:1px solid #ccc;
       }
       .view {
         background-color: #fff;
+        overflow: auto;
+
       }
-      .blog-card{
-        background: #fff;
+      img { 
+        -webkit-filter: grayscale(100%);
+        -moz-filter: grayscale(100%);
+        filter: grayscale(100%);
       }
+      /*img { 
+          filter: blur(1px); 
+          -webkit-filter: grayscale(100%), blur(1px); 
+          -moz-filter: blur(3px);
+          -o-filter: blur(3px); 
+          -ms-filter: blur(3px);
+      }*/
     </style>
     <core-ajax
     id="ajax" auto
-    url="https://api.myjson.com/bins/2yku7"
+    url="https://api.github.com/users/prabhuramkumar/gists?access_token={{accessToken}}"
     handleAs="json"
     response="{{response}}"
     progress="{{progress}}"
@@ -45,7 +54,7 @@
 
     <core-ajax
     id="gistAjax"
-    url="https://api.myjson.com/bins/4x46v"
+    url="{{gistUrl}}"
     handleAs="json"
     response="{{gistresponse}}"
     progress="{{gistprogress}}"
@@ -53,94 +62,56 @@
     ></core-ajax>
 
     <section flex vertical layout>
-      <core-animated-pages flex id="pages" selected="0" on-core-animated-pages-transition-end="{{transitionend}}" transitions="cross-fade-all hero-transition slide-up slide-down cross-fade list-cascade">
+      <core-animated-pages flex id="pages" selected="0" on-core-animated-pages-transition-end="{{transitionend}}" transitions="cross-fade hero-transition slide-up slide-down cross-fade list-cascade">
 
         <section vertical layout>
-          <div id="container" horizontal flex wrap around-justified layout hero-p>
+          <div id="container" horizontal flex wrap around-justified layout>
 
             <div layout vertical center-justified hidden?="{{response}}">
               <paper-spinner active></paper-spinner>
             </div>
 
             <template repeat="{{blog, i in blogs}}">
-              	<blog-card class="card" on-tap="{{selection}}" hero-id="blog-{{i}}" hero>
-                    <img src="{{blog.owner.avatar_url}}" width="70" height="70">
-                    <h2>{{blog.description}}</h2>
-                    <p>{{blog.updated_at}}</p>
-                    {{i}}{{lastSelected}}
+              	<blog-card class="blog-card" on-tap="{{selection}}" hero-id="{{i}}" hero slide-up>
+                  <h2>{{blog.description}}</h2>
+                  <p>{{blog.updated_at}}</p>
+                  <img src="{{blog.owner.avatar_url}}">
+                  <span>{{blog.owner.login}}</span>
           	    </blog-card>
             </template>
 
           </div>
         </section>
 
-        <template repeat="{{blog, i in blogs}}" id="blogContent">
-            <section vertical layout>
+        <section id="page" vertical layout>
 
-              <div class="view" hero-id="blog-{{i}}" flex vertical layout hero>
-                  <core-icon-button icon="arrow-back" on-tap="{{back}}"></core-icon-button>
-                  <blog-content content="{{content}}" index="{{$.pages.selected}}">
-                    <h2 class="title" cross-fade>{{blogTitle}}</h2>
-                  </blog-content>
-              </div>
+          <div class="view" flex vertical layout hero-id={{k}} hero>
+              
+              <template if="{{!gistresponse}}">
+                <div layout vertical center-center flex>
+                  <paper-spinner active></paper-spinner>
+                </div>
+              </template>
 
-            </section>
-        </template>
+              <template if="{{gistresponse}}">
+                <core-icon-button icon="arrow-back" on-tap="{{back}}"></core-icon-button>
+                <blog-content content="{{content}}">
+                  <h2 class="title">{{blogTitle}}</h2>
+                  <p>{{blogDate}}</p>
+                  <span>{{blogOwner}}</span>
+                </blog-content>
+              </template>
+
+          </div>
+
+        </section>
 
        </core-animated-pages>
      </section>
 
   </template>
 
-  <script>
-  	Polymer('blog-list', {
-		  responseChanged: function(oldValue) {
-		    this.blogs = this.response;
-		  },
-      selection: function(e){
-        var k = e.target.templateInstance.model.i;
-        this.$.pages.selected = k+1;
-        var blog = e.target.templateInstance.model.blog;
-        this.blogTitle = blog.description; 
-        this.$.gistAjax.go();
-      },
-      transitionend: function(){
-        if (this.lastSelected) {
-          this.lastSelected = null;
-        }
-      },
-      back: function() {
-        this.lastSelected = this.$.pages.selected;
-        this.$.pages.selected = 0;
-      },
-      gistresponseChanged: function(e, detail){
-        if(this.$.gistAjax.response != null){
-          this.gist = this.$.gistAjax.response;
-          return false;
-        }
-        var files = this.gist.files;
-        var contentFile;
-        for (var i in files) {
-            if (files.hasOwnProperty(i) && typeof(i) !== 'function') {
-                contentFile = files[i];
-                break;
-            }
-        }
-        this.content = markdown.toHTML(contentFile.content);
-        this.renderContent();
-        // this.injectBoundHTML(this.content, this.$.pages.lastSelected.firstElementChild);
-        // console.log(this.$.pages.selectedItem);
-        // console.log(this.$.pages.lastSelected);
-        // console.log(document.querySelector('blogContent').options[this.$.pages.selected]);
-        // console.log(document.querySelector('template').model);
-      },
-      renderContent: function(){
-        alert("dsf");
-        // this.innerHTML = this.html;
-      }
-      
-	  });
-  </script>
-   <script src="../../bower_components/markdown/lib/markdown.js"></script>
+  <script src="blogList.js"></script>
+  <script src="../../bower_components/markdown/lib/markdown.js"></script>
 
 </polymer-element>
