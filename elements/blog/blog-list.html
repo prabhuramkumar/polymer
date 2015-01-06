@@ -4,13 +4,14 @@
 <link rel="import" href="../../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+
 <link href="../../bower_components/core-animated-pages/transitions/slide-up.html" rel="import">
 <link href="../../bower_components/core-animated-pages/transitions/list-cascade.html" rel="import">
 
 <link rel="import" href="blog-card.html">
 <link rel="import" href="blog-content.html">
 
-<polymer-element name="blog-list">
+<polymer-element name="blog-list" attributes="route">
   <template>
     <style>
       :host{
@@ -44,7 +45,7 @@
       }*/
     </style>
     <core-ajax
-    id="ajax" auto
+    id="ajax" 
     url="https://api.github.com/users/prabhuramkumar/gists?access_token={{accessToken}}"
     handleAs="json"
     response="{{response}}"
@@ -53,18 +54,21 @@
     ></core-ajax>
 
     <core-ajax
-    id="gistAjax"
-    url="{{gistUrl}}"
-    handleAs="json"
-    response="{{gistresponse}}"
-    progress="{{gistprogress}}"
-    loading="{{gistloading}}"
-    ></core-ajax>
+      id="gistAjax" 
+      url="{{gistUrl}}"
+      handleAs="json"
+      response="{{gistresponse}}"
+      progress="{{gistprogress}}"
+      loading="{{gistloading}}"
+      ></core-ajax>
+
+    
 
     <section flex vertical layout>
-      <core-animated-pages flex id="pages" selected="0" on-core-animated-pages-transition-end="{{transitionend}}" transitions="cross-fade hero-transition slide-up slide-down cross-fade list-cascade">
+      
+      <core-animated-pages flex id="pages" selected="{{route}}" valueattr="route" on-core-animated-pages-transition-end="{{transitionend}}" transitions="cross-fade hero-transition slide-up slide-down cross-fade list-cascade">
 
-        <section vertical layout>
+        <section vertical layout route="">
           <div id="container" horizontal flex wrap around-justified layout>
 
             <div layout vertical center-justified hidden?="{{response}}">
@@ -72,7 +76,7 @@
             </div>
 
             <template repeat="{{blog, i in blogs}}">
-              	<blog-card class="blog-card" on-tap="{{selection}}" hero-id="{{i}}" hero slide-up>
+              	<blog-card class="blog-card" link="{{i}}" on-tap="{{selection}}" hero-id="{{i}}" hero slide-up>
                   <h2>{{blog.description}}</h2>
                   <p>{{blog.updated_at}}</p>
                   <img src="{{blog.owner.avatar_url}}">
@@ -83,9 +87,10 @@
           </div>
         </section>
 
-        <section id="page" vertical layout>
+        <section id="page" vertical layout route="{{route}}">
 
-          <div class="view" flex vertical layout hero-id={{k}} hero>
+          <div class="view" flex vertical layout hero-id="{{k}}" hero>
+                
               
               <template if="{{!gistresponse}}">
                 <div layout vertical center-center flex>
@@ -94,8 +99,8 @@
               </template>
 
               <template if="{{gistresponse}}">
-                <core-icon-button icon="arrow-back" on-tap="{{back}}"></core-icon-button>
-                <blog-content content="{{content}}">
+                <core-icon-button icon="arrow-back" link="" on-tap="{{back}}"></core-icon-button>
+                <blog-content content="{{blogContent}}">
                   <h2 class="title">{{blogTitle}}</h2>
                   <p>{{blogDate}}</p>
                   <span>{{blogOwner}}</span>
