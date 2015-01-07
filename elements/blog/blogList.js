@@ -13,7 +13,6 @@ Polymer('blog-list', {
     this.constructUrl(blog);
   },
   constructUrl: function(blog){
-    console.log(blog.description);
     var blogTitle = blog.description.split(" ").join('-');
     this.route = "/blog/"+blogTitle+"-"+blog.id;
     this.loadGist(blog.id);
