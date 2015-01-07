@@ -5,18 +5,31 @@ Polymer('blog-list', {
   },
   responseChanged: function(oldValue) {
     this.blogs = this.filterMarkDown(this.response);
-    if(this.route){
-      this.loadGist();
-    }
+    this.deConstructUrl(this.route);
   },
   selection: function(e){
+    var blog = e.target.templateInstance.model.blog;
     this.k = e.target.templateInstance.model.i;
-    this.route = this.k;
-    this.loadGist();
-    this.route = e.currentTarget.getAttribute('link');
+    this.constructUrl(blog);
   },
-  loadGist: function(){
-    this.gistUrl = this.blogs[this.route].url+"?access_token="+this.accessToken; 
+  constructUrl: function(blog){
+    console.log(blog.description);
+    var blogTitle = blog.description.split(" ").join('-');
+    this.route = "/blog/"+blogTitle+"-"+blog.id;
+    this.loadGist(blog.id);
+  },
+  deConstructUrl: function(route){
+    if(route != ""){
+      var blogRoute = route.split("/");
+      if(blogRoute[0] == "blog"){
+        var blogIdString = blogRoute[1].split("-");
+        var blogId = blogIdString[blogIdString.length - 1];
+        this.loadGist(blogId);
+      }
+  }
+  },
+  loadGist: function(blogId){
+    this.gistUrl = "https://api.github.com/gists/"+blogId+"?access_token="+this.accessToken; 
     this.$.gistAjax.go();
   },
   buildBlogFromGist: function(gist){

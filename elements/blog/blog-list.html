@@ -76,7 +76,7 @@
             </div>
 
             <template repeat="{{blog, i in blogs}}">
-              	<blog-card class="blog-card" link="{{i}}" on-tap="{{selection}}" hero-id="{{i}}" hero slide-up>
+              	<blog-card class="blog-card" link="{{blog.id}}" on-tap="{{selection}}" hero-id="{{i}}" hero slide-up>
                   <h2>{{blog.description}}</h2>
                   <p>{{blog.updated_at}}</p>
                   <img src="{{blog.owner.avatar_url}}">
