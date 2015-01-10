@@ -13,19 +13,20 @@ Polymer('blog-list', {
     this.constructUrl(blog);
   },
   constructUrl: function(blog){
+    console.log(blog.description);
     var blogTitle = blog.description.split(" ").join('-');
     this.route = "/blog/"+blogTitle+"-"+blog.id;
     this.loadGist(blog.id);
   },
   deConstructUrl: function(route){
     if(route != ""){
-      var blogRoute = route.split("/");
+    var blogRoute = route.split("/");
       if(blogRoute[0] == "blog"){
         var blogIdString = blogRoute[1].split("-");
         var blogId = blogIdString[blogIdString.length - 1];
         this.loadGist(blogId);
       }
-  }
+    }
   },
   loadGist: function(blogId){
     this.gistUrl = "https://api.github.com/gists/"+blogId+"?access_token="+this.accessToken; 

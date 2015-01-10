@@ -1,13 +1,15 @@
 <html>
 <head>
 
-  <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
   <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
   <link rel="import" href="bower_components/core-icon-button/core-icon-button.html">
-  <link rel="import" href="bower_components/core-menu/core-menu.html">
-  <link rel="import" href="bower_components/core-item/core-item.html">
   <link rel="import" href="bower_components/core-scroll-header-panel/core-scroll-header-panel.html">
   <link rel="import" href="bower_components/flatiron-director/flatiron-director.html">
+  <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
+  <link rel="import" href="bower_components/core-menu/core-menu.html">
+  <link rel="import" href="bower_components/core-item/core-item.html">
+  <link rel="import" href="bower_components/core-animated-pages/transitions/slide-up.html" >
+  <link rel='import' href='bower_components/core-animated-pages/transitions/slide-from-bottom.html'>
   <link rel="import" href="elements/blog/blog-list.html">
   <link rel="import" href="elements/blog/page.html">
   <link rel="import" href="elements/create/create-button.html">
@@ -29,19 +31,6 @@
 		font-family: 'Quicksand', sans-serif;
 	}
 
-	core-toolbar {
-		background: transparent;
-		color: white;
-	}
-	/* background for toolbar when it is at its full size */
-	core-scroll-header-panel::shadow #headerBg {
-		background-color:#333;
-	}
-
-	/* background for toolbar when it is condensed */
-	core-scroll-header-panel::shadow #condensedHeaderBg {
-		background-color: #333;
-	}
 	
   </style>
 
@@ -50,23 +39,82 @@
 	<!-- <div flex layout vertical>
 		<div style="height:100px;">Header</div>
 		<div flex style="background:green;">two</div>
-	</div> -->		
-  <template is="auto-binding">
-	  <flatiron-director route="{{route}}" autoHash></flatiron-director>	
-	  <core-scroll-header-panel flex layout vertical mode="waterfall">
-	    <core-toolbar>
-	      	<core-icon icon="dashboard" class="bottom"></core-icon>
-	      	<h2 class="bottom">Gisty</h2>
-	      	<create-button></create-button>
-	    </core-toolbar>
+	</div> -->	
+  <polymer-element name="blog-app">	
+    <template>
+      <style>
+        core-toolbar {
+          background: transparent;
+          color: white;
+        }
+        /* background for toolbar when it is at its full size */
+        core-scroll-header-panel::shadow #headerBg {
+          background-color:#333;
+        }
 
-	    <div class="container">
-	    	<!-- <animated-page></animated-page> -->
-	    	<blog-list route="{{route}}" vertical layout></blog-list>
+        /* background for toolbar when it is condensed */
+        core-scroll-header-panel::shadow #condensedHeaderBg {
+          background-color: #333;
+        }
+        core-animated-pages{
+          height: 100%;
+        }
+        div{
+          background: purple;
+        }
+        #blogs div{
+          background: green;
+        }
+        #create div{
+          background: red;
+        }
 
-	    </div>
-	  </core-scroll-header-panel> 
-  </template>
+      </style>
+  	  <flatiron-director route="{{route}}" autoHash></flatiron-director>	
+
+  	  <core-scroll-header-panel flex layout vertical mode="waterfall"-tall>
+
+  	    <core-toolbar>
+  	      	<core-icon flex icon="dashboard" class="bottom"></core-icon>
+  	      	<h2 class="bottom" flex>Gisty</h2>
+            <core-menu flex horizontal layout selected="{{route}}" valueattr="id" selectedItem="{{pageItem}}">
+              <core-item icon="home" label="Home" id=""></core-item>
+              <core-item icon="today" label="Blogs" id="blogs"></core-item>
+              <core-item icon="account-box" label="Create" id="create"></core-item>
+            </core-menu>
+            <create-button></create-button>
+  	    </core-toolbar>
+
+  	    <core-animated-pages id="pages" selected="{{route}}" valueattr="id" transitions="slide-from-bottom">
+          <section vertical layout id="">
+            <div flex layout vertical>
+              <div flex>home</div>
+            </div>
+          </section>
+
+           <section vertical layout id="blogs">
+             <div flex layout vertical>
+                <blog-list flex layout vertical></blog-list>
+              </div>
+          </section>
+
+          <section vertical layout id="create">
+            <div flex layout vertical>
+              Create
+            </div>
+          </section>
+  	    </core-animated-pages>
+
+  	  </core-scroll-header-panel> 
+    </template>
+
+    <script>
+    Polymer({
+     
+    });
+    </script>
+  </polymer-element>
+  <blog-app vertical layout flex></blog-app>
 
 </body>
 </html>
