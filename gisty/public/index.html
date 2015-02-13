@@ -1,0 +1,167 @@
+<html>
+<head>
+
+  <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+  <link rel="import" href="bower_components/core-icon-button/core-icon-button.html">
+  <link rel="import" href="bower_components/core-scroll-header-panel/core-scroll-header-panel.html">
+  <link rel="import" href="bower_components/flatiron-director/flatiron-director.html">
+  <link rel="import" href="bower_components/core-animated-pages/core-animated-pages.html">
+  <link rel="import" href="bower_components/core-menu/core-menu.html">
+  <link rel="import" href="bower_components/core-item/core-item.html">
+  <link rel='import' href='bower_components/core-animated-pages/transitions/slide-from-bottom.html'>
+
+  <link rel="import" href="elements/blog/blog-list.html">
+  <link rel="import" href="elements/create/create-button.html">
+  <link rel="import" href="elements/create/create.html">
+  <link rel="import" href="elements/globals.html">
+
+  <link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Bevan' rel='stylesheet' type='text/css'>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+
+   <style>
+  html,body {
+    height: 100%;
+    margin: 0;
+    background-color: #E5E5E5;
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  
+  </style>
+
+</head>
+<body unresolved fullbleed layout vertical>
+  <!-- <div flex layout vertical>
+    <div style="height:100px;">Header</div>
+    <div flex style="background:green;">two</div>
+  </div> -->  
+  <polymer-element name="blog-app"> 
+    <template>
+      <style>
+        core-toolbar {
+          background: transparent;
+          color: white;
+        }
+        /* background for toolbar when it is at its full size */
+        core-scroll-header-panel::shadow #headerBg {
+          background-color:#333;
+        }
+
+        /* background for toolbar when it is condensed */
+        core-scroll-header-panel::shadow #condensedHeaderBg {
+          background-color: #333;
+        }
+        core-animated-pages{
+          height: 100%;
+        }
+        core-animated-pages div{
+          background: #ececec;
+        }
+       
+        h2{
+          margin:0;
+        }
+        
+        core-menu{
+          position: absolute;
+          right:0px;
+          height: 65px;
+          font-size: 14px;
+        }
+        core-menu core-item{
+          margin-right: 20px;
+        }
+        .welcome-message{
+          width:50%;
+          text-align: center;
+          font-size: 4em;
+        }
+        .welcome-message em{
+          color: #666;
+        }
+        .welcome-hint{
+          width:40%;
+          text-align: center;
+          font-size: 1.6em;
+        }
+
+      </style>
+      <flatiron-director route="{{route}}" autoHash></flatiron-director> 
+
+     
+
+      <core-scroll-header-panel flex layout vertical mode="waterfall"-tall>
+
+        <core-toolbar>
+          <core-icon  icon="dashboard" class="bottom"></core-icon>
+          <h2 class="bottom" >Gisty</h2>
+          <core-menu  horizontal layout selected="{{route}}" valueattr="id" selectedItem="{{pageItem}}">
+            <core-item label="Home" id=""></core-item>
+            <core-item  label="Blogs" id="blogs"></core-item>
+            <core-item label="Create" id="create"></core-item>
+          </core-menu>
+        </core-toolbar>
+
+        
+
+        <core-animated-pages id="pages" selected="{{route}}" valueattr="id" transitions="slide-from-bottom">
+          <section vertical layout id="">
+            <div flex layout vertical>
+              <div flex layout vertical center-center>
+                <h2 class="welcome-message">
+                Gisty is a simple blogging application based on Gist.
+                </h2>
+                <h2 class="welcome-hint"> You can <em>create</em>, <em>edit</em>, <em>read</em> blogs by logging in with your github credentials.
+                </h2>
+                <create-button></create-button>
+              </div>
+            </div>
+          </section>
+
+           <section vertical layout id="blogs">
+             <div flex layout vertical>
+              <template if="{{blogPage}}">
+                <blog-list flex layout vertical></blog-list>
+              </template>
+              </div>
+          </section>
+
+          <section vertical layout id="create">
+            <div flex layout vertical>
+              <template if="{{createPage}}">
+                <create-blog flex layout vertical></create-blog>
+              </template>
+            </div>
+          </section>
+        </core-animated-pages>
+
+      </core-scroll-header-panel> 
+    </template>
+
+    <script>
+    Polymer({
+      
+     routeChanged: function(){
+      if(this.route=="blogs")
+      {
+        this.loginname = "prabhuramkumar";
+        this.blogPage = true;
+      }
+      if(this.route=="create")
+      {
+        this.createPage = true;
+      }
+      
+     }
+    });
+    </script>
+  </polymer-element>
+  <blog-app vertical layout flex></blog-app>
+
+</body>
+</html>

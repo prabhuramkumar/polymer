@@ -1,0 +1,54 @@
+<polymer-element name="app-globals" attributes="values">
+  <template>
+    <core-ajax
+        id="userAjax" 
+        url="http://api.github.com/user?access_token={{accessToken}}"
+        response="{{userResponse}}"
+        progress="{{userProgress}}"
+        loading="{{userLoading}}"
+        handleAs="json"
+    ></core-ajax> 
+  </template>
+
+  <script>
+  (function() {
+    var values = {};
+    Polymer('app-globals', {
+       accessToken: "b3a68b5a67cc88c023c8baf88211c0101258f8b9",
+
+       ready: function() {
+         this.values = values;
+         for (var i = 0; i < this.attributes.length; ++i) {
+           var attr = this.attributes[i];
+           values[attr.nodeName] = attr.value;
+         }
+        if(!this.values.ready){
+          this.$.userAjax.go();
+        }
+      },
+
+      userResponseChanged: function(){
+        var user = this.userResponse;
+        this.values.ready = true;
+        this.values.username = user.name;
+        this.values.userLoginName = user.login; 
+      },
+    });
+  })();
+  </script>
+</polymer-element>
+
+
+<!-- <polymer-element name="app-globals">
+    <script>
+      (function() {
+        Polymer('app-globals', {
+          ready: function() {
+            this.username = 'prabhu';
+            this.loginname = 'prabhuramkumar';
+            this.token = 'token';
+          }
+        });
+      })();
+    </script>
+</polymer-element> -->

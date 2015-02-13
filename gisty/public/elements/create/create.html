@@ -1,0 +1,114 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-autogrow-textarea.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input-decorator.html">
+
+<polymer-element name="create-blog">
+  <template>
+  	<style>
+      paper-button {
+        background: #ccc;
+        width: 100%;
+  	    color: #fff;
+        margin-right:2em;
+        border: 1px solid #666; 
+      }
+      form{
+      	width:50%;
+      	margin: 0 auto;
+      }
+    
+      paper-button {
+        background: #5677fc;
+        color: #fff;
+        width:20%;
+        margin: 0 auto;
+      }
+      paper-input{
+        border:0;
+      }
+      .title{
+        font-size: 35px;
+        font-weight: bold;
+      }
+
+    .custom /deep/ ::-webkit-input-placeholder {
+      color: #ccc;
+    }
+
+    .custom /deep/ ::-moz-placeholder {
+      color: #ccc;
+    }
+
+    .custom /deep/ .unfocused-underline {
+      background-color: transparent;
+    }
+
+    .custom /deep/ .focused-underline {
+      background-color:transparent;
+    }
+
+    .custom.invalid /deep/ .focused-underline {
+      background-color: transparent;
+    }
+
+
+  	</style>
+
+
+		<core-ajax
+    method = "POST"
+    id="createAjax" 
+    url="http://localhost:3000/gist"
+    params= '{{params}}'
+    response="{{response}}"
+    progress="{{progress}}"
+    loading="{{loading}}"
+    ></core-ajax>
+
+    <form flex layout vertical>
+	    <paper-input id="blogTitle" class="custom title" label="Blog Title" value="{{description}}"></paper-input>
+
+      <paper-input-decorator label="Blog Content"  class="custom content">
+        <paper-autogrow-textarea>
+          <textarea value="{{content}}"></textarea>
+        </paper-autogrow-textarea>
+      </paper-input-decorator>
+
+      <paper-button raised on-tap="{{submitBlog}}" value="{{}}">Submit</paper-button>
+	  </form>
+
+  </template>
+  <script>
+  	Polymer('create-blog',{
+      ready: function(){
+        this.userAccessToken = /access_token=([^#]+)#/.exec(window.location.href)[1];
+        this.$.blogTitle.focus();
+      },
+  		responseChanged: function(){
+  			console.log("Created Successfully");
+  		},
+      submitBlog: function(){
+        console.log(this.userAccessToken);
+        this.params = {gist: JSON.stringify(this.getRequestBody()), access_token: this.userAccessToken}
+        this.$.createAjax.go();
+      },
+      getRequestBody:function() {
+        var contentObj = {};
+        var fileName = this.description + ".md";
+        contentObj[fileName] = {"content": this.content};
+        return  {
+          "description": this.description,
+          "public": true,
+          "files": contentObj
+        }
+      }
+  	});
+  </script>
+</polymer-element>
+
+
+
+

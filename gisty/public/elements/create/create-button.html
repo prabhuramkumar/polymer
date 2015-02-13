@@ -1,0 +1,30 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<polymer-element name="create-button">
+  <template>
+  	<style>
+    paper-button {
+      background: #5677fc;
+	    color: #fff;
+      margin:2em;
+    }
+  	</style>
+
+  
+	<paper-button raised class="blue" title="create" on-tap="{{create}}">Login</paper-button>
+
+
+  </template>
+  <script>
+  	Polymer({
+  		create:function(){
+  			window.location = "https://github.com/login/oauth/authorize?client_id=1cec815a7d243a2eb6fc&scope=gist,user";
+  		},
+  		responseChanged: function(){
+  			console.log(this.response);
+  		}
+  	});
+  </script>
+</polymer-element>

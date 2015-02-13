@@ -1,9 +1,17 @@
 Polymer('blog-list', {
   accessToken: "b3a68b5a67cc88c023c8baf88211c0101258f8b9",
   ready: function(){
-      this.$.ajax.go();
+    this.userAccessToken = /access_token=([^#]+)#/.exec(window.location.href)[1];
+    this.$.userAjax.go();
+  },
+  userResponseChanged: function(){
+    var user = this.userResponse;
+    this.username = user.name;
+    this.userLoginName = user.login; 
+    this.$.gistsAjax.go();
   },
   responseChanged: function(oldValue) {
+    console.log("response" + this.response);
     this.blogs = this.filterMarkDown(this.response);
     this.deConstructUrl(this.route);
   },
@@ -13,7 +21,6 @@ Polymer('blog-list', {
     this.constructUrl(blog);
   },
   constructUrl: function(blog){
-    console.log(blog.description);
     var blogTitle = blog.description.split(" ").join('-');
     this.route = "/blog/"+blogTitle+"-"+blog.id;
     this.loadGist(blog.id);

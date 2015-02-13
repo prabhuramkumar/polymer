@@ -11,6 +11,9 @@
 <link rel="import" href="blog-card.html">
 <link rel="import" href="blog-content.html">
 
+<link rel="import" href="../globals.html">
+
+
 <polymer-element name="blog-list" attributes="route">
   <template>
     <style>
@@ -23,7 +26,7 @@
       .blog-card{
         text-align: left;
         background: white;
-        width:60%;
+        width:30%;
         border-bottom:1px solid #ccc;
       }
       .view {
@@ -44,9 +47,20 @@
           -ms-filter: blur(3px);
       }*/
     </style>
+
+    <!-- <app-globals values="{{globals}}"></app-globals> -->
     <core-ajax
-    id="ajax" 
-    url="https://api.github.com/users/prabhuramkumar/gists?access_token={{accessToken}}"
+    id="userAjax" 
+    url="http://api.github.com/user?access_token={{accessToken}}"
+    response="{{userResponse}}"
+    progress="{{userProgress}}"
+    loading="{{userLoading}}"
+    handleAs="json"
+    ></core-ajax> 
+    
+    <core-ajax
+    id="gistsAjax" 
+    url="https://api.github.com/users/{{userLoginName}}/gists?access_token={{userAccessToken}}"
     handleAs="json"
     response="{{response}}"
     progress="{{progress}}"
@@ -62,7 +76,6 @@
       loading="{{gistloading}}"
       ></core-ajax>
 
-    
 
     <section flex vertical layout>
       
@@ -91,7 +104,6 @@
 
           <div class="view" flex vertical layout hero-id="{{k}}" hero>
                 
-              
               <template if="{{!gistresponse}}">
                 <div layout vertical center-center flex>
                   <paper-spinner active></paper-spinner>
